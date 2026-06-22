@@ -361,11 +361,11 @@ textarea {
 
 .btn-utilitaire {
   width: auto;
-  min-width: 210px;
-  min-height: 46px;
-  padding: 12px 20px;
+  min-width: 150px;
+  min-height: 40px;
+  padding: 8px 12px;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: #1e40af;
@@ -391,15 +391,15 @@ textarea {
 }
 
 .btn-utilitaire .btn-icone {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
   color: #3156b8;
 }
 
 .btn-utilitaire .btn-icone svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   stroke-width: 1.85;
 }
 
@@ -449,13 +449,7 @@ textarea {
 
   .barre-utilitaire {
     justify-content: stretch;
-    margin: -2px 0 4px 0;
-  }
-
-  .btn-utilitaire {
-    width: 100%;
-    min-height: 46px;
-    font-size: 14px;
+    margin: -4px 0 20px 0;
   }
 }
 
@@ -566,37 +560,4 @@ textarea {
 
 .ligne-adresse-courte .champ input {
   width: 100%;
-}
-
-.input-avec-icone {
-  position: relative;
-}
-
-.input-avec-icone input {
-  padding-right: 42px;
-}
-
-.input-icone {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  color: #4b5563;
-}
-
-.input-icone svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }

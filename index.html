@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Placement en Garde à vue</title>
+  <meta name="theme-color" content="#edf4fb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="SMS GAV" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <h1 class="titre-app">
+        <span>Placement en</span>
+        <span>Garde à Vue</span>
+      </h1>
+      <p class="intro">Complétez les informations puis choisissez le mode d’envoi.</p>
+      <div class="barre-utilitaire">
+        <button type="button" id="btnVider" class="btn btn-utilitaire">
+          <span class="btn-icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M9 3.75h6" />
+              <path d="M4.75 6.75h14.5" />
+              <path d="M9.75 10.25v6.5" />
+              <path d="M14.25 10.25v6.5" />
+              <path d="M6.75 6.75l.6 10.05a1.5 1.5 0 0 0 1.5 1.41h6.3a1.5 1.5 0 0 0 1.5-1.41l.6-10.05" />
+            </svg>
+          </span>
+          <span>Vider les champs</span>
+        </button>
+      </div>
+
+      <form id="formulaire" class="formulaire" autocomplete="off">
+        <div class="champ">
+          <label for="unite" class="titre-bulle">Unité</label>
+          <input id="unite" name="unite" type="text" class="champ-majuscule" placeholder="BTA, COB, BR..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+
+        <div class="champ">
+          <label for="upva" class="titre-bulle">UPVA</label>
+          <input id="upva" name="upva" type="text" placeholder="Unité/PV/Année" maxlength="17" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+
+       <div class="champ">
+  <label for="datePlacement" class="titre-bulle">Date et heure du placement</label>
+  <div class="ligne-double ligne-placement">
+    <div class="champ champ-placement">
+      <div class="input-avec-icone">
+        <input id="datePlacement" name="datePlacement" type="text" autocomplete="off" />
+        <span class="input-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <rect x="3" y="5" width="18" height="16" rx="3" />
+            <path d="M8 3v4" />
+            <path d="M16 3v4" />
+            <path d="M3 9h18" />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="champ champ-placement">
+      <div class="input-avec-icone">
+        <input id="heurePlacement" name="heurePlacement" type="time" autocomplete="off" />
+        <span class="input-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 8v4l3 2" />
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <fieldset class="bloc">
+          <legend>Identité</legend>
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" name="prenom" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="dateNaissance">Date de naissance</label>
+            <input id="dateNaissance" name="dateNaissance" type="text" inputmode="numeric" placeholder="JJ/MM/AAAA" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <fieldset class="sous-bloc">
+            <legend>Filiation</legend>
+            <div class="ligne-double">
+              <div class="champ">
+                <label for="nomPere">Nom Père</label>
+                <input id="nomPere" name="nomPere" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              </div>
+              <div class="champ">
+                <label for="prenomPere">Prénom Père</label>
+                <input id="prenomPere" name="prenomPere" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              </div>
+            </div>
+            <div class="ligne-double">
+              <div class="champ">
+                <label for="nomMere">Nom Mère</label>
+                <input id="nomMere" name="nomMere" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              </div>
+              <div class="champ">
+                <label for="prenomMere">Prénom Mère</label>
+                <input id="prenomMere" name="prenomMere" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              </div>
+            </div>
+          </fieldset>
+          <div class="champ">
+            <label for="profession">Profession</label>
+            <input id="profession" name="profession" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+        </fieldset>
+
+        <fieldset class="bloc">
+          <legend>Adresse</legend>
+          <div class="champ">
+            <label for="numeroAdresse">N°</label>
+            <input id="numeroAdresse" name="numeroAdresse" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="rueAdresse">Voie</label>
+            <input id="rueAdresse" name="rueAdresse" type="text" class="champ-capitalise" placeholder="Rue, Avenue, Boulevard..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="ligne-double ligne-adresse-courte">
+            <div class="champ">
+              <label for="codePostal">Code postal</label>
+              <input id="codePostal" name="codePostal" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </div>
+            <div class="champ">
+              <label for="ville">Ville</label>
+              <input id="ville" name="ville" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="bloc">
+          <legend>Faits</legend>
+          <div class="champ champ-plein">
+            <label for="natinf">NATINF</label>
+            <input id="natinf" name="natinf" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ champ-plein">
+            <label for="libelle">Libellé</label>
+            <input id="libelle" name="libelle" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ champ-plein">
+            <label for="dateFaits">Date des faits</label>
+            <input id="dateFaits" name="dateFaits" type="text" inputmode="numeric" placeholder="JJ/MM/AAAA" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ champ-plein">
+            <label for="lieuFaits">Lieu des faits</label>
+            <input id="lieuFaits" name="lieuFaits" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+        </fieldset>
+
+        <fieldset class="bloc">
+          <legend>Droits</legend>
+          <fieldset class="ligne-radio radio-cartes">
+            <legend>Droits notifiés</legend>
+            <div class="radio-options">
+              <input type="radio" id="droitsNotifiesOui" name="droitsNotifies" value="Oui" />
+              <label for="droitsNotifiesOui">Oui</label>
+              <input type="radio" id="droitsNotifiesNon" name="droitsNotifies" value="Non" checked />
+              <label for="droitsNotifiesNon">Non</label>
+            </div>
+          </fieldset>
+          <div id="blocDroitsDifferes" hidden>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Droits différés</legend>
+              <div class="radio-options">
+                <input type="radio" id="droitsDifferesOui" name="droitsDifferes" value="Oui" />
+                <label for="droitsDifferesOui">Oui</label>
+                <input type="radio" id="droitsDifferesNon" name="droitsDifferes" value="Non" checked />
+                <label for="droitsDifferesNon">Non</label>
+              </div>
+            </fieldset>
+          </div>
+          <div id="detailsDroits" class="details-conditionnels" hidden>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Droit au silence</legend>
+              <div class="radio-options">
+                <input type="radio" id="droitSilenceOui" name="droitSilence" value="Oui" />
+                <label for="droitSilenceOui">Oui</label>
+                <input type="radio" id="droitSilenceNon" name="droitSilence" value="Non" checked />
+                <label for="droitSilenceNon">Non</label>
+              </div>
+            </fieldset>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Médecin</legend>
+              <div class="radio-options">
+                <input type="radio" id="medecinOui" name="medecin" value="Oui" />
+                <label for="medecinOui">Oui</label>
+                <input type="radio" id="medecinNon" name="medecin" value="Non" checked />
+                <label for="medecinNon">Non</label>
+              </div>
+            </fieldset>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Avocat</legend>
+              <div class="radio-options">
+                <input type="radio" id="avocatOui" name="avocat" value="Oui" />
+                <label for="avocatOui">Oui</label>
+                <input type="radio" id="avocatNon" name="avocat" value="Non" checked />
+                <label for="avocatNon">Non</label>
+              </div>
+            </fieldset>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Famille</legend>
+              <div class="radio-options">
+                <input type="radio" id="familleOui" name="famille" value="Oui" />
+                <label for="familleOui">Oui</label>
+                <input type="radio" id="familleNon" name="famille" value="Non" checked />
+                <label for="familleNon">Non</label>
+              </div>
+            </fieldset>
+            <fieldset class="ligne-radio radio-cartes">
+              <legend>Employeur</legend>
+              <div class="radio-options">
+                <input type="radio" id="employeurOui" name="employeur" value="Oui" />
+                <label for="employeurOui">Oui</label>
+                <input type="radio" id="employeurNon" name="employeur" value="Non" checked />
+                <label for="employeurNon">Non</label>
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <fieldset class="bloc">
+          <legend>Enquêteur</legend>
+          <div class="champ">
+            <label for="enqueteurGrade">Grade</label>
+            <input id="enqueteurGrade" name="enqueteurGrade" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="enqueteurNom">Nom</label>
+            <input id="enqueteurNom" name="enqueteurNom" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="enqueteurPrenom">Prénom</label>
+            <input id="enqueteurPrenom" name="enqueteurPrenom" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ">
+            <label for="enqueteurUnite">Unité</label>
+            <input id="enqueteurUnite" name="enqueteurUnite" type="text" class="champ-majuscule" placeholder="BTA, COB, BR..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+        </fieldset>
+
+        <div class="actions actions-centrees">
+          <button type="button" id="btnSMS" class="btn btn-principal">
+            <span class="btn-icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6 18.5c-.28 0-.5-.22-.5-.5v-2.6A7.47 7.47 0 0 1 4 11c0-4.14 3.58-7.5 8-7.5s8 3.36 8 7.5-3.58 7.5-8 7.5c-1.33 0-2.58-.3-3.68-.84l-2.1.72c-.07.02-.15.04-.22.04Z" />
+              </svg>
+            </span>
+            <span>Générer le SMS</span>
+          </button>
+          <button type="button" id="btnCopier" class="btn btn-tertiaire">Copier le texte</button>
+        </div>
+
+        <p id="retour" class="retour" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch((erreur) => {
+          console.error("Échec d’enregistrement du service worker :", erreur);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

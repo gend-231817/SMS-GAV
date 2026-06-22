@@ -36,51 +36,49 @@
           <span>Vider les champs</span>
         </button>
       </div>
+
       <form id="formulaire" class="formulaire" autocomplete="off">
         <div class="champ">
-          <label for="unite">Unité</label>
+          <label for="unite" class="titre-bulle">Unité</label>
           <input id="unite" name="unite" type="text" class="champ-majuscule" placeholder="BTA, COB, BR..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         </div>
+
         <div class="champ">
-          <label for="upva">UPVA</label>
+          <label for="upva" class="titre-bulle">UPVA</label>
           <input id="upva" name="upva" type="text" placeholder="Unité/PV/Année" maxlength="17" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         </div>
-        <div class="champ">
-          <label>Date et heure du placement</label>
-          <div class="ligne-double ligne-placement">
-            <div class="champ champ-placement">
-              <div class="input-avec-icone">
-                <input id="datePlacement" name="datePlacement" type="text" autocomplete="off" />
-                <span class="input-icone" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                    <path d="M7 3v4" />
-                    <path d="M17 3v4" />
-                    <path d="M4 7h16" />
-                    <path d="M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2H6a2 2 0 0 1 -2 -2V7a2 2 0 0 1 2 -2Z" />
-                    <path d="M8 12h2" />
-                    <path d="M12 12h2" />
-                    <path d="M16 12h0" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div class="champ champ-placement">
-              <div class="input-avec-icone">
-                <input
-                  id="heurePlacement"
-                  name="heurePlacement"
-                  type="time"
-                  autocomplete="off"
-                />
-                <span class="input-icone" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                  <circle cx="12" cy="12" r="8" />
-                  <path d="M12 8v4l3 2" />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
+
+       <div class="champ">
+  <label for="datePlacement" class="titre-bulle">Date et heure du placement</label>
+  <div class="ligne-double ligne-placement">
+    <div class="champ champ-placement">
+      <div class="input-avec-icone">
+        <input id="datePlacement" name="datePlacement" type="text" autocomplete="off" />
+        <span class="input-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <rect x="3" y="5" width="18" height="16" rx="3" />
+            <path d="M8 3v4" />
+            <path d="M16 3v4" />
+            <path d="M3 9h18" />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="champ champ-placement">
+      <div class="input-avec-icone">
+        <input id="heurePlacement" name="heurePlacement" type="text" autocomplete="off" inputmode="numeric" maxlength="5" placeholder="HH:MM" />
+        <span class="input-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 8v4l3 2" />
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
         <fieldset class="bloc">
           <legend>Identité</legend>
           <div class="champ">
@@ -123,6 +121,7 @@
             <input id="profession" name="profession" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </div>
         </fieldset>
+
         <fieldset class="bloc">
           <legend>Adresse</legend>
           <div class="champ">
@@ -144,27 +143,27 @@
             </div>
           </div>
         </fieldset>
+
         <fieldset class="bloc">
           <legend>Faits</legend>
-          <div class="ligne-double ligne-faits-courts">
-            <div class="champ">
-              <label for="natinf">NATINF</label>
-              <input id="natinf" name="natinf" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </div>
-            <div class="champ">
-              <label for="libelle">Libellé</label>
-              <input id="libelle" name="libelle" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </div>
-            <div class="champ">
-              <label for="dateFaits">Date des faits</label>
-              <input id="dateFaits" name="dateFaits" type="text" inputmode="numeric" placeholder="JJ/MM/AAAA" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </div>
+          <div class="champ champ-plein">
+            <label for="natinf">NATINF</label>
+            <input id="natinf" name="natinf" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </div>
-          <div class="champ">
+          <div class="champ champ-plein">
+            <label for="libelle">Libellé</label>
+            <input id="libelle" name="libelle" type="text" class="champ-majuscule" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ champ-plein">
+            <label for="dateFaits">Date des faits</label>
+            <input id="dateFaits" name="dateFaits" type="text" inputmode="numeric" placeholder="JJ/MM/AAAA" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <div class="champ champ-plein">
             <label for="lieuFaits">Lieu des faits</label>
             <input id="lieuFaits" name="lieuFaits" type="text" class="champ-capitalise" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </div>
         </fieldset>
+
         <fieldset class="bloc">
           <legend>Droits</legend>
           <fieldset class="ligne-radio radio-cartes">
@@ -235,6 +234,7 @@
             </fieldset>
           </div>
         </fieldset>
+
         <fieldset class="bloc">
           <legend>Enquêteur</legend>
           <div class="champ">
@@ -254,6 +254,7 @@
             <input id="enqueteurUnite" name="enqueteurUnite" type="text" class="champ-majuscule" placeholder="BTA, COB, BR..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </div>
         </fieldset>
+
         <div class="actions actions-centrees">
           <button type="button" id="btnSMS" class="btn btn-principal">
             <span class="btn-icone" aria-hidden="true">
@@ -265,6 +266,7 @@
           </button>
           <button type="button" id="btnCopier" class="btn btn-tertiaire">Copier le texte</button>
         </div>
+
         <p id="retour" class="retour" aria-live="polite"></p>
       </form>
     </section>

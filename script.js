@@ -20,7 +20,6 @@ function ligne(label, value) {
   return `${label} : ${value || "-"}`;
 }
 
-
 function construireAdresse() {
   const numero = valeur("numeroAdresse");
   const rue = valeur("rueAdresse");

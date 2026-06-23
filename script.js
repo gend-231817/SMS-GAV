@@ -143,11 +143,11 @@ function initialiserChampDate(id, libelle) {
 }
 
 function verifierDatesAvantEnvoi() {
-  const definitions = [
-    { id: "dateNaissance", libelle: "Date de naissance" },
-    { id: "datePlacement", libelle: "Date et heure du placement" },
-    { id: "dateFaits", libelle: "Date des faits" }
-  ];
+ const definitions = [
+  { id: "dateNaissance", libelle: "Date de naissance" },
+  { id: "datePlacement", libelle: "Date et heure du placement" },
+  { id: "dateFaits", libelle: "Date des faits" }
+];
 
   for (const def of definitions) {
     const input = document.getElementById(def.id);
@@ -336,7 +336,7 @@ function formulaireContientDesDonnees() {
 
 function viderLesChamps() {
   const datePlacement = document.getElementById("datePlacement");
-  const heurePlacement = document.getElementById("heurePlacement");
+  const valeurDatePlacement = datePlacement ? datePlacement.value : "";
 
   formulaire.querySelectorAll('input[type="text"], textarea').forEach((champ) => {
     champ.value = "";
@@ -345,12 +345,8 @@ function viderLesChamps() {
   });
 
   if (datePlacement) {
-    datePlacement.value = formaterDateFR(new Date());
-  }
-
-  if (heurePlacement) {
-    heurePlacement.value = "";
-  }
+  datePlacement.value = formaterDateFR(new Date());
+}
 
   formulaire.querySelectorAll('input[type="radio"]').forEach((radio) => {
     radio.checked =
@@ -412,21 +408,9 @@ if (btnSMS) {
   });
 }
 
-function initialiserChampHeurePlacement() {
-  const input = document.getElementById("heurePlacement");
-  if (!input) return;
-
-  input.addEventListener("input", () => {
-    let v = input.value.replace(/\D/g, "").slice(0, 4);
-    if (v.length >= 3) v = v.slice(0, 2) + ":" + v.slice(2);
-    input.value = v;
-  });
-}
-
 function demarrer() {
   initialiserChampDate("dateNaissance", "Date de naissance");
   initialiserChampDate("dateFaits", "Date des faits");
-  initialiserChampHeurePlacement();
   initialiserChampsMajuscules();
   initialiserChampsCapitalises();
   initialiserChampCodePostal();

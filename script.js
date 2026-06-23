@@ -11,7 +11,6 @@ function valeur(id) {
   return element ? element.value.trim() : "";
 }
 
-
 function valeurRadio(name) {
   const checked = document.querySelector(`input[name="${name}"]:checked`);
   return checked ? checked.value : "Non";
@@ -20,6 +19,7 @@ function valeurRadio(name) {
 function ligne(label, value) {
   return `${label} : ${value || "-"}`;
 }
+
 
 function construireAdresse() {
   const numero = valeur("numeroAdresse");

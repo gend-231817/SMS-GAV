@@ -72,16 +72,10 @@ function formaterDateProgressive(valeurBrute) {
 
   let resultat = "";
   if (jour) resultat += jour;
-  if (mois) {
-    resultat += "/" + mois;
-  } else if (chiffres.length > 2) {
-    resultat += "/";
-  }
-  if (annee) {
-    resultat += "/" + annee;
-  } else if (chiffres.length > 4) {
-    resultat += "/";
-  }
+  if (mois) resultat += "/" + mois;
+  else if (chiffres.length > 2) resultat += "/";
+  if (annee) resultat += "/" + annee;
+  else if (chiffres.length > 4) resultat += "/";
   return resultat;
 }
 
@@ -93,6 +87,16 @@ function dateValide(dateTexte) {
   const mois = parseInt(moisStr, 10);
   const annee = parseInt(anneeStr, 10);
   return jour <= joursDansMois(mois, annee);
+}
+
+function dateDansLePasseOuAujourdhui(dateTexte) {
+  if (!dateValide(dateTexte)) return false;
+  const [jour, mois, annee] = dateTexte.split("/").map(Number);
+  const date = new Date(annee, mois - 1, jour);
+  const aujourdHui = new Date();
+  aujourdHui.setHours(0, 0, 0, 0);
+  date.setHours(0, 0, 0, 0);
+  return date <= aujourdHui;
 }
 
 function afficherRetour(texte, erreur = false) {
@@ -110,18 +114,16 @@ function afficherErreurDate(input, message) {
 function reinitialiserErreurDate(input) {
   input.style.borderColor = "";
   input.style.boxShadow = "";
-  if (retour && retour.textContent.toLowerCase().includes("date")) {
-    retour.textContent = "";
-  }
+  if (retour && retour.textContent.toLowerCase().includes("date")) retour.textContent = "";
 }
 
-function initialiserChampDate(id, libelle) {
+function initialiserChampDate(id, libelle, options = {}) {
+  const { interdireFutur = false } = options;
   const input = document.getElementById(id);
   if (!input) return;
 
   input.addEventListener("input", () => {
-    const nouvelleValeur = formaterDateProgressive(input.value);
-    input.value = nouvelleValeur;
+    input.value = formaterDateProgressive(input.value);
     reinitialiserErreurDate(input);
   });
 
@@ -131,34 +133,42 @@ function initialiserChampDate(id, libelle) {
       reinitialiserErreurDate(input);
       return;
     }
+
     if (!dateValide(valeurDate)) {
-      afficherErreurDate(
-        input,
-        `La ${libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`
-      );
+      afficherErreurDate(input, `La ${libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`);
       return;
     }
+
+    if (interdireFutur && !dateDansLePasseOuAujourdhui(valeurDate)) {
+      afficherErreurDate(input, `La ${libelle.toLowerCase()} ne peut pas être dans le futur.`);
+      return;
+    }
+
     reinitialiserErreurDate(input);
   });
 }
 
 function verifierDatesAvantEnvoi() {
- const definitions = [
-  { id: "dateNaissance", libelle: "Date de naissance" },
-  { id: "datePlacement", libelle: "Date et heure du placement" },
-  { id: "dateFaits", libelle: "Date des faits" }
-];
+  const definitions = [
+    { id: "dateNaissance", libelle: "Date de naissance", interdireFutur: true },
+    { id: "datePlacement", libelle: "Date et heure du placement", interdireFutur: true },
+    { id: "dateFaits", libelle: "Date des faits", interdireFutur: true }
+  ];
 
   for (const def of definitions) {
     const input = document.getElementById(def.id);
     if (!input) continue;
     const valeurDate = input.value.trim();
     if (!valeurDate) continue;
+
     if (!dateValide(valeurDate)) {
-      afficherErreurDate(
-        input,
-        `La ${def.libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`
-      );
+      afficherErreurDate(input, `La ${def.libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`);
+      input.focus();
+      return false;
+    }
+
+    if (def.interdireFutur && !dateDansLePasseOuAujourdhui(valeurDate)) {
+      afficherErreurDate(input, `La ${def.libelle.toLowerCase()} ne peut pas être dans le futur.`);
       input.focus();
       return false;
     }
@@ -232,10 +242,24 @@ function formaterDateFR(date) {
 }
 
 function initialiserDatePlacement() {
-  initialiserChampDate("datePlacement", "Date et heure du placement");
+  initialiserChampDate("datePlacement", "Date et heure du placement", { interdireFutur: true });
   const input = document.getElementById("datePlacement");
   if (!input) return;
   if (!input.value) input.value = formaterDateFR(new Date());
+}
+
+function formaterHeureProgressive(valeurBrute) {
+  const chiffres = valeurBrute.replace(/\D/g, "").slice(0, 4);
+  if (chiffres.length <= 2) return chiffres;
+  return `${chiffres.slice(0, 2)}:${chiffres.slice(2)}`;
+}
+
+function initialiserChampHeure() {
+  const champ = document.getElementById("heurePlacement");
+  if (!champ) return;
+  champ.addEventListener("input", (event) => {
+    event.target.value = formaterHeureProgressive(event.target.value);
+  });
 }
 
 function construireDateHeurePlacement() {
@@ -336,17 +360,16 @@ function formulaireContientDesDonnees() {
 
 function viderLesChamps() {
   const datePlacement = document.getElementById("datePlacement");
-  const valeurDatePlacement = datePlacement ? datePlacement.value : "";
+  if (datePlacement) datePlacement.value = formaterDateFR(new Date());
+
+  const heurePlacement = document.getElementById("heurePlacement");
+  if (heurePlacement) heurePlacement.value = "";
 
   formulaire.querySelectorAll('input[type="text"], textarea').forEach((champ) => {
-    champ.value = "";
+    if (champ.id !== "datePlacement" && champ.id !== "heurePlacement") champ.value = "";
     champ.style.borderColor = "";
     champ.style.boxShadow = "";
   });
-
-  if (datePlacement) {
-  datePlacement.value = formaterDateFR(new Date());
-}
 
   formulaire.querySelectorAll('input[type="radio"]').forEach((radio) => {
     radio.checked =
@@ -409,13 +432,14 @@ if (btnSMS) {
 }
 
 function demarrer() {
-  initialiserChampDate("dateNaissance", "Date de naissance");
-  initialiserChampDate("dateFaits", "Date des faits");
+  initialiserChampDate("dateNaissance", "Date de naissance", { interdireFutur: true });
+  initialiserDatePlacement();
+  initialiserChampDate("dateFaits", "Date des faits", { interdireFutur: true });
   initialiserChampsMajuscules();
   initialiserChampsCapitalises();
   initialiserChampCodePostal();
   initialiserChampUPVA();
-  initialiserDatePlacement();
+  initialiserChampHeure();
   mettreAJourBlocDroits();
 }
 

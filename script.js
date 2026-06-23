@@ -443,4 +443,5 @@ function demarrer() {
   mettreAJourBlocDroits();
 }
 
+
 window.onload = demarrer;

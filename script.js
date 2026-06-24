@@ -6,19 +6,30 @@ const retour = document.getElementById("retour");
 const detailsDroits = document.getElementById("detailsDroits");
 const blocDroitsDifferes = document.getElementById("blocDroitsDifferes");
 
+
 function valeur(id) {
   const element = document.getElementById(id);
   return element ? element.value.trim() : "";
 }
+
 
 function valeurRadio(name) {
   const checked = document.querySelector(`input[name="${name}"]:checked`);
   return checked ? checked.value : "Non";
 }
 
+
+function valeursCasesACocher(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map((element) => element.value.trim())
+    .filter(Boolean);
+}
+
+
 function ligne(label, value) {
   return `${label} : ${value || "-"}`;
 }
+
 
 function construireAdresse() {
   const numero = valeur("numeroAdresse");
@@ -31,15 +42,18 @@ function construireAdresse() {
   return [ligne1, ligne2].filter(Boolean).join(", ");
 }
 
+
 function joursDansMois(mois, annee) {
   return new Date(annee, mois, 0).getDate();
 }
+
 
 function formaterDateProgressive(valeurBrute) {
   const chiffres = valeurBrute.replace(/\D/g, "").slice(0, 8);
   let jour = chiffres.slice(0, 2);
   let mois = chiffres.slice(2, 4);
   let annee = chiffres.slice(4, 8);
+
 
   if (jour.length === 1) {
     const j = parseInt(jour, 10);
@@ -70,6 +84,7 @@ function formaterDateProgressive(valeurBrute) {
     jour = String(j).padStart(2, "0");
   }
 
+
   let resultat = "";
   if (jour) resultat += jour;
   if (mois) resultat += "/" + mois;
@@ -78,6 +93,7 @@ function formaterDateProgressive(valeurBrute) {
   else if (chiffres.length > 4) resultat += "/";
   return resultat;
 }
+
 
 function dateValide(dateTexte) {
   const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/;
@@ -89,6 +105,7 @@ function dateValide(dateTexte) {
   return jour <= joursDansMois(mois, annee);
 }
 
+
 function dateDansLePasseOuAujourdhui(dateTexte) {
   if (!dateValide(dateTexte)) return false;
   const [jour, mois, annee] = dateTexte.split("/").map(Number);
@@ -99,11 +116,13 @@ function dateDansLePasseOuAujourdhui(dateTexte) {
   return date <= aujourdHui;
 }
 
+
 function afficherRetour(texte, erreur = false) {
   if (!retour) return;
   retour.textContent = texte;
   retour.style.color = erreur ? "#b91c1c" : "#2563eb";
 }
+
 
 function afficherErreurDate(input, message) {
   input.style.borderColor = "#b91c1c";
@@ -111,21 +130,25 @@ function afficherErreurDate(input, message) {
   afficherRetour(message, true);
 }
 
+
 function reinitialiserErreurDate(input) {
   input.style.borderColor = "";
   input.style.boxShadow = "";
   if (retour && retour.textContent.toLowerCase().includes("date")) retour.textContent = "";
 }
 
+
 function initialiserChampDate(id, libelle, options = {}) {
   const { interdireFutur = false } = options;
   const input = document.getElementById(id);
   if (!input) return;
 
+
   input.addEventListener("input", () => {
     input.value = formaterDateProgressive(input.value);
     reinitialiserErreurDate(input);
   });
+
 
   input.addEventListener("blur", () => {
     const valeurDate = input.value.trim();
@@ -134,19 +157,23 @@ function initialiserChampDate(id, libelle, options = {}) {
       return;
     }
 
+
     if (!dateValide(valeurDate)) {
       afficherErreurDate(input, `La ${libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`);
       return;
     }
+
 
     if (interdireFutur && !dateDansLePasseOuAujourdhui(valeurDate)) {
       afficherErreurDate(input, `La ${libelle.toLowerCase()} ne peut pas être dans le futur.`);
       return;
     }
 
+
     reinitialiserErreurDate(input);
   });
 }
+
 
 function verifierDatesAvantEnvoi() {
   const definitions = [
@@ -155,17 +182,20 @@ function verifierDatesAvantEnvoi() {
     { id: "dateFaits", libelle: "Date des faits", interdireFutur: true }
   ];
 
+
   for (const def of definitions) {
     const input = document.getElementById(def.id);
     if (!input) continue;
     const valeurDate = input.value.trim();
     if (!valeurDate) continue;
 
+
     if (!dateValide(valeurDate)) {
       afficherErreurDate(input, `La ${def.libelle.toLowerCase()} doit être au format JJ/MM/AAAA avec une date valide.`);
       input.focus();
       return false;
     }
+
 
     if (def.interdireFutur && !dateDansLePasseOuAujourdhui(valeurDate)) {
       afficherErreurDate(input, `La ${def.libelle.toLowerCase()} ne peut pas être dans le futur.`);
@@ -174,12 +204,15 @@ function verifierDatesAvantEnvoi() {
     }
   }
 
+
   return true;
 }
+
 
 function appliquerMajusculeTotale(texte) {
   return texte.toUpperCase();
 }
+
 
 function appliquerCapitalisation(texte) {
   return texte
@@ -192,6 +225,7 @@ function appliquerCapitalisation(texte) {
     .join(" ");
 }
 
+
 function initialiserChampsMajuscules() {
   document.querySelectorAll(".champ-majuscule").forEach((champ) => {
     champ.addEventListener("input", (event) => {
@@ -201,6 +235,7 @@ function initialiserChampsMajuscules() {
     });
   });
 }
+
 
 function initialiserChampsCapitalises() {
   document.querySelectorAll(".champ-capitalise").forEach((champ) => {
@@ -212,6 +247,7 @@ function initialiserChampsCapitalises() {
   });
 }
 
+
 function initialiserChampCodePostal() {
   const champ = document.getElementById("codePostal");
   if (!champ) return;
@@ -220,9 +256,11 @@ function initialiserChampCodePostal() {
   });
 }
 
+
 function formaterUPVA(valeurBrute) {
   return valeurBrute.replace(/[^0-9/]/g, "").slice(0, 17);
 }
+
 
 function initialiserChampUPVA() {
   const champ = document.getElementById("upva");
@@ -234,12 +272,14 @@ function initialiserChampUPVA() {
   });
 }
 
+
 function formaterDateFR(date) {
   const jour = String(date.getDate()).padStart(2, "0");
   const mois = String(date.getMonth() + 1).padStart(2, "0");
   const annee = date.getFullYear();
   return `${jour}/${mois}/${annee}`;
 }
+
 
 function initialiserDatePlacement() {
   initialiserChampDate("datePlacement", "Date et heure du placement", { interdireFutur: true });
@@ -248,11 +288,13 @@ function initialiserDatePlacement() {
   if (!input.value) input.value = formaterDateFR(new Date());
 }
 
+
 function formaterHeureProgressive(valeurBrute) {
   const chiffres = valeurBrute.replace(/\D/g, "").slice(0, 4);
   if (chiffres.length <= 2) return chiffres;
   return `${chiffres.slice(0, 2)}:${chiffres.slice(2)}`;
 }
+
 
 function initialiserChampHeure() {
   const champ = document.getElementById("heurePlacement");
@@ -262,6 +304,7 @@ function initialiserChampHeure() {
   });
 }
 
+
 function construireDateHeurePlacement() {
   const datePlacement = valeur("datePlacement");
   const heurePlacement = valeur("heurePlacement");
@@ -269,8 +312,11 @@ function construireDateHeurePlacement() {
   return datePlacement || heurePlacement || "-";
 }
 
+
 function construireTexte() {
   const droitsNotifies = valeurRadio("droitsNotifies");
+  const raisonsMesure = valeursCasesACocher("raisonsMesure");
+
   const lignes = [
     "PLACEMENT EN GARDE À VUE",
     "================================",
@@ -296,12 +342,24 @@ function construireTexte() {
     ligne("NATINF", valeur("natinf")),
     ligne("Libellé", valeur("libelle")),
     ligne("Date des faits", valeur("dateFaits")),
-    ligne("Lieu des faits", valeur("lieuFaits")),
+    ligne("Lieu des faits", valeur("lieuFaits"))
+  ];
+
+  if (raisonsMesure.length > 0) {
+    lignes.push(
+      "",
+      "RAISON(S) AYANT MOTIVÉ LA MESURE",
+      "--------------------------------",
+      ...raisonsMesure.map((mention) => `- ${mention}`)
+    );
+  }
+
+  lignes.push(
     "",
     "DROITS",
     "--------------------------------",
     ligne("Droits notifiés", droitsNotifies)
-  ];
+  );
 
   if (droitsNotifies === "Non") {
     lignes.push(ligne("Droits différés", valeurRadio("droitsDifferes")));
@@ -330,11 +388,13 @@ function construireTexte() {
   return lignes.join("\n");
 }
 
+
 function mettreAJourBlocDroits() {
   const droitsNotifies = valeurRadio("droitsNotifies");
   if (blocDroitsDifferes) blocDroitsDifferes.hidden = droitsNotifies !== "Non";
   if (detailsDroits) detailsDroits.hidden = droitsNotifies !== "Oui";
 }
+
 
 function formulaireContientDesDonnees() {
   const champsTexte = formulaire.querySelectorAll('input[type="text"], textarea');
@@ -352,24 +412,34 @@ function formulaireContientDesDonnees() {
     "employeurOui"
   ];
 
-  return radiosOui.some((id) => {
-    const radio = document.getElementById(id);
-    return radio && radio.checked;
-  });
+  if (
+    radiosOui.some((id) => {
+      const radio = document.getElementById(id);
+      return radio && radio.checked;
+    })
+  ) {
+    return true;
+  }
+
+  const casesCochees = document.querySelectorAll('input[name="raisonsMesure"]:checked');
+  return casesCochees.length > 0;
 }
 
 function viderLesChamps() {
   const datePlacement = document.getElementById("datePlacement");
   if (datePlacement) datePlacement.value = formaterDateFR(new Date());
 
+
   const heurePlacement = document.getElementById("heurePlacement");
   if (heurePlacement) heurePlacement.value = "";
+
 
   formulaire.querySelectorAll('input[type="text"], textarea').forEach((champ) => {
     if (champ.id !== "datePlacement" && champ.id !== "heurePlacement") champ.value = "";
     champ.style.borderColor = "";
     champ.style.boxShadow = "";
   });
+
 
   formulaire.querySelectorAll('input[type="radio"]').forEach((radio) => {
     radio.checked =
@@ -382,16 +452,25 @@ function viderLesChamps() {
       radio.id === "employeurNon";
   });
 
+
+  formulaire.querySelectorAll('input[name="raisonsMesure"]').forEach((caseACocher) => {
+  caseACocher.checked = false;
+});
+
+
   mettreAJourBlocDroits();
   afficherRetour("Les champs ont été vidés.");
+
 
   const premierChamp = document.getElementById("unite");
   if (premierChamp) premierChamp.focus();
 }
 
+
 document.querySelectorAll('input[name="droitsNotifies"]').forEach((radio) => {
   radio.addEventListener("change", mettreAJourBlocDroits);
 });
+
 
 if (btnVider) {
   btnVider.addEventListener("click", () => {
@@ -404,6 +483,7 @@ if (btnVider) {
     viderLesChamps();
   });
 }
+
 
 if (btnCopier) {
   btnCopier.addEventListener("click", async () => {
@@ -418,6 +498,7 @@ if (btnCopier) {
   });
 }
 
+
 if (btnSMS) {
   btnSMS.addEventListener("click", () => {
     if (!verifierDatesAvantEnvoi()) return;
@@ -430,6 +511,7 @@ if (btnSMS) {
     }
   });
 }
+
 
 function demarrer() {
   initialiserChampDate("dateNaissance", "Date de naissance", { interdireFutur: true });

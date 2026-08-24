@@ -326,6 +326,15 @@ function construireTexte() {
     ligne("Lieu des faits", valeur("lieuFaits"))
   ];
 
+  if (raisonsMesure.length > 0) {
+  lignes.push(
+    "",
+    "RAISON(S) AYANT MOTIVÉ LA MESURE",
+    "--------------------------------",
+    ...raisonsMesure.map((raison) => `- ${raison}`)
+  );
+}
+
   lignes.push(
     "",
     "DROITS",

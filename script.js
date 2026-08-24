@@ -335,6 +335,7 @@ function construireTexte() {
   );
 }
 
+
   lignes.push(
     "",
     "DROITS",
